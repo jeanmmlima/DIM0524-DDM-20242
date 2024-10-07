@@ -20,13 +20,6 @@ class TodoApp extends StatelessWidget {
       )
     ];
 
-    TextEditingController _descricaoController = TextEditingController();
-
-    void _addTarefa(){
-      final descricaoTarefa = _descricaoController.text;
-      print(descricaoTarefa);
-    }
-
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -49,14 +42,12 @@ class TodoApp extends StatelessWidget {
                   SizedBox(
                     height: 16,
                   ),
-                  TextField(
-                    controller: _descricaoController,
-                  ),
+                  TextField(),
                   SizedBox(
                     height: 16,
                   ),
                   ElevatedButton(
-                    onPressed: _addTarefa,
+                    onPressed: (){},
                     child: Text("Adicionar", style: TextStyle(fontSize: 16)),
                   ),
                   SizedBox(
