@@ -8,22 +8,24 @@ class TodoApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    List<Tarefa> _listaTarefas = [];
-
-    _listaTarefas.add(
+    List<Tarefa> _listaTarefas = [
       Tarefa(
-        id: Random().nextInt(9999).toString(), 
-        descricao: "Estudar", 
-        dataTarefa: DateTime.now())
-    );
-
-    _listaTarefas.add(
+          id: Random().nextInt(9999).toString(),
+          descricao: "Estudar",
+          dataTarefa: DateTime.now()),
       Tarefa(
-        id: Random().nextInt(9999).toString(), 
-        descricao: "Jogar", 
-        dataTarefa: DateTime.now())
-    );
+        id: Random().nextInt(9999).toString(),
+        descricao: "Estudar",
+        dataTarefa: DateTime.now(),
+      )
+    ];
+
+    TextEditingController _descricaoController = TextEditingController();
+
+    void _addTarefa(){
+      final descricaoTarefa = _descricaoController.text;
+      print(descricaoTarefa);
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -40,16 +42,21 @@ class TodoApp extends StatelessWidget {
             Container(
               child: Column(
                 children: [
-                  Text("Descrição: ", style: Theme.of(context).textTheme.bodyLarge,),
+                  Text(
+                    "Descrição: ",
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
                   SizedBox(
                     height: 16,
                   ),
-                  TextField(),
+                  TextField(
+                    controller: _descricaoController,
+                  ),
                   SizedBox(
                     height: 16,
                   ),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: _addTarefa,
                     child: Text("Adicionar", style: TextStyle(fontSize: 16)),
                   ),
                   SizedBox(
@@ -61,22 +68,24 @@ class TodoApp extends StatelessWidget {
             Container(
               height: 300,
               child: ListView.builder(
-                itemCount: _listaTarefas.length,
-                itemBuilder: (context, index){
-                  return Card(
-                    margin: EdgeInsets.all(8),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(_listaTarefas.elementAt(index).descricao,style: Theme.of(context).textTheme.bodyLarge,),
-                        ],
+                  itemCount: _listaTarefas.length,
+                  itemBuilder: (context, index) {
+                    return Card(
+                      margin: EdgeInsets.all(8),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              _listaTarefas.elementAt(index).descricao,
+                              style: Theme.of(context).textTheme.bodyLarge,
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  );
-                }
-                ),
+                    );
+                  }),
             )
           ],
         ),
