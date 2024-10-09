@@ -1,4 +1,6 @@
+import 'package:f04_todo_list/model/Tarefa.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class TaskDetail extends StatelessWidget {
   const TaskDetail({super.key});

@@ -1,4 +1,5 @@
 import 'package:f04_todo_list/model/Tarefa.dart';
+import 'package:f04_todo_list/screens/TaskDetail.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -12,6 +13,11 @@ class TodoList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    void _openTaskDetail(Tarefa tarefa){
+      
+    }
+
     return Container(
       height: 300,
       child: ListView.builder(
