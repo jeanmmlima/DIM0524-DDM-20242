@@ -35,17 +35,11 @@ class _TodoAppState extends State<TodoApp> {
       _listaTarefas.add(_novaTarefa);
     });
 
-    Navigator.of(context).pop();
+    
   }
 
   void _openTaskForm() {
-    showModalBottomSheet(
-      context: context,
-      builder: (context) => Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: TodoForm(onSubmit: _addTarefa),
-      ),
-    );
+    
   }
 
   @override
