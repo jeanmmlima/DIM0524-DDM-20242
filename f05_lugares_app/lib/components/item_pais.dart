@@ -1,5 +1,4 @@
 import 'package:f05_lugares_app/model/pais.dart';
-import 'package:f05_lugares_app/routes/rotas.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
