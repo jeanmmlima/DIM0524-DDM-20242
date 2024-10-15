@@ -11,7 +11,7 @@ class LugarPorPaisScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-        
+    final Pais pais = ModalRoute.of(context)?.settings.arguments as Pais;
     //prepara a lista de lugares por pais
     final List<Lugar> lugaresPorPais = lugares.where((lugar) {
       return lugar.paises.contains(pais.id);
