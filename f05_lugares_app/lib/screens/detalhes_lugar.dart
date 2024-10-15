@@ -2,15 +2,16 @@ import 'package:f05_lugares_app/model/lugar.dart';
 import 'package:flutter/material.dart';
 
 class DetalhesLugarScreen extends StatelessWidget {
-  const DetalhesLugarScreen({super.key, required this.lugar});
+  const DetalhesLugarScreen({super.key});
 
-  final Lugar lugar;
 
   @override
   Widget build(BuildContext context) {
     void _favoritarLugar() {
       print("Lugar favoritado!");
     }
+
+    final Lugar lugar = ModalRoute.of(context)?.settings.arguments as Lugar;
 
     return Scaffold(
       appBar: AppBar(

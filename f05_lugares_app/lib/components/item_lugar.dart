@@ -11,7 +11,7 @@ class ItemLugar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => context.push('/detalheLugar', extra: lugar),
+      onTap: () => Navigator.of(context).pushNamed('/detalheLugar', arguments: lugar),
       child: Card(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
           elevation: 4,
