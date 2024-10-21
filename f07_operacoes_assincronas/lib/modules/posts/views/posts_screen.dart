@@ -21,11 +21,12 @@ class _PostsScreenState extends State<PostsScreen> {
     listaPosts = _postRepository.fetchPosts();
   }
 
-  void _openPostForm() {
+  void _openPostForm(Post? post) {
     showModalBottomSheet(
         context: context,
         builder: (context) => PostForm(
               postRepository: _postRepository,
+              post: post,
             ));
   }
 
@@ -68,14 +69,27 @@ class _PostsScreenState extends State<PostsScreen> {
                           "#${posts.data![index].id!} ${posts.data![index].title!}"),
                       //subtitle: Text(posts.data![index].body!),
                       leading: Icon(Icons.find_in_page_rounded),
-                      trailing: IconButton(
-                          onPressed: () {
-                            _openModalDeletePost(posts.data![index].id!);
-                          },
-                          icon: Icon(
-                            Icons.delete,
-                            color: Colors.purple,
-                          )),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(
+                              onPressed: () {
+                                _openModalDeletePost(posts.data![index].id!);
+                              },
+                              icon: Icon(
+                                Icons.delete,
+                                color: Colors.purple,
+                              ),),
+                           IconButton(
+                              onPressed: () {
+                                _openPostForm(posts.data![index]);
+                              },
+                              icon: Icon(
+                                Icons.edit,
+                                color: Colors.deepPurpleAccent,
+                              ),),
+                        ],
+                      ),
                     ),
                   );
                 },
@@ -90,7 +104,9 @@ class _PostsScreenState extends State<PostsScreen> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _openPostForm,
+        onPressed: (){
+          _openPostForm(null);
+        },
         child: Icon(Icons.add_circle),
       ),
     );

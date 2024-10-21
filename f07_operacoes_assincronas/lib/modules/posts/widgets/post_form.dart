@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import '../model/post.dart';
 
 class PostForm extends StatelessWidget {
- PostForm({super.key, required this.postRepository });
+ PostForm({super.key, required this.postRepository, this.post});
 
 
   final PostRepository postRepository; 
+
+  Post? post;
 
   // Create a global key that uniquely identifies the Form widget
   // and allows validation of the form.
@@ -19,7 +21,11 @@ class PostForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final teste = "dasda";
+    if(post != null){
+      _tituloController.text = post!.title!;
+      _descricaoController.text = post!.body!;
+    }
+
 
     return Center(
       child: Padding(
@@ -29,8 +35,18 @@ class PostForm extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text("Cadastrar Novo Post", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
+              post != null
+              ? Text("Editar Post", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),)
+              : Text("Cadastrar Novo Post", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
               SizedBox(height: 16,),
+              post != null 
+              ? Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text("Id: ${post!.id!}"),
+                ],
+              )
+              : SizedBox(height: 0, width: 0,) ,
               TextFormField(
             decoration: InputDecoration(
               hintText: "Inserir o título",
@@ -68,19 +84,28 @@ class PostForm extends StatelessWidget {
                   final titulo = _tituloController.text;
                   final descricao = _descricaoController.text;
 
-                  //espera a resposta para seguir para a próxima linha de código
+                  if(this.post == null){
+                    //espera a resposta para seguir para a próxima linha de código
                   final Post novoPost = await postRepository.cadastrarPost(titulo, descricao);
-
                   final _mySnackBar = SnackBar(content: Text("Post ${novoPost.id} cadastrado com sucesso!", style: TextStyle(fontSize: 20),));
-
                   ScaffoldMessenger.of(context).showSnackBar(
                     _mySnackBar,
                   );
-
+                  } else {
+                    //espera a resposta para seguir para a próxima linha de código
+                  final Post postEditado = await postRepository.editarPost(this.post!);
+                  final _mySnackBar = SnackBar(content: Text("Post ${postEditado.id} editado com sucesso!", style: TextStyle(fontSize: 20),));
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    _mySnackBar,
+                  );
+                  }
                   Navigator.of(context).pop();
                 }
               },
-              child: const Text('Cadastrar post'),
+              child: 
+              post != null
+              ? const Text('Editar post')
+              : const Text('Cadastrar post'),
             ),
             ],
           ),
