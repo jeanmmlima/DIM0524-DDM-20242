@@ -3,6 +3,7 @@ import 'package:f06_carrinho_provider/model/carrinho.store.dart';
 import 'package:f06_carrinho_provider/model/carrinho_model.dart';
 import 'package:f06_carrinho_provider/model/item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
 class CatalagoScreen extends StatelessWidget {
@@ -85,6 +86,8 @@ class _AddButton extends StatelessWidget {
   final Item item;
 
   const _AddButton({required this.item, Key? key}) : super(key: key);
+  
+  
 
   @override
   Widget build(BuildContext context) {
@@ -92,20 +95,22 @@ class _AddButton extends StatelessWidget {
         //final carrinho = Provider.of<CarrinhoModel>(context);
         final carrinhoX = Provider.of<CarrinhoModelX>(context);
 
-        return TextButton(
-          style: ButtonStyle(
-            overlayColor: WidgetStateProperty.resolveWith<Color?>((states) {
-              if (states.contains(WidgetState.pressed)) {
-                return Theme.of(context).primaryColor;
-              }
-              return null;
-            }),
+        return Observer(
+          builder: (context) => TextButton(
+            style: ButtonStyle(
+              overlayColor: WidgetStateProperty.resolveWith<Color?>((states) {
+                if (states.contains(WidgetState.pressed)) {
+                  return Theme.of(context).primaryColor;
+                }
+                return null;
+              }),
+            ),
+            onPressed: () { 
+              carrinhoX.add(item);
+              },
+              
+            child: carrinhoX.hasItem(item) ? const Icon(Icons.check) : const Text('ADD'), 
           ),
-          onPressed: () { 
-            carrinhoX.add(item);
-            },
-            
-          child: carrinhoX.hasItem(item) ? const Icon(Icons.check) : const Text('ADD'), 
         );
 
   }

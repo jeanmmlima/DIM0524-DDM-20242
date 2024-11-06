@@ -36,7 +36,6 @@ abstract class _CarrinhoModelX with  Store {
     _products.remove(item);
   }
 
-  @action
   bool hasItem(Item item){
     return _products.contains(item);
   }
