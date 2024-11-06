@@ -1,5 +1,6 @@
 import 'package:f06_carrinho_provider/contador_provider/contador_model.dart';
 import 'package:f06_carrinho_provider/contador_provider/meu_contador.dart';
+import 'package:f06_carrinho_provider/model/carrinho.store.dart';
 import 'package:f06_carrinho_provider/model/carrinho_model.dart';
 import 'package:f06_carrinho_provider/theme/theme.dart';
 import 'package:f06_carrinho_provider/view/carrinho_screen.dart';
@@ -10,8 +11,8 @@ import 'package:provider/provider.dart';
 
 void main() {
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => CarrinhoModel(),
+    Provider(
+      create: (context) => CarrinhoModelX(),
       child: MeuApp(),
     ),
   );

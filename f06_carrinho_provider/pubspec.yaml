@@ -31,6 +31,8 @@ dependencies:
   flutter:
     sdk: flutter
   provider: ^6.1.2
+  mobx: ^2.4.0
+  flutter_mobx: ^2.2.1
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -40,6 +42,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  mobx_codegen: ^2.6.2 #flutter packages pub run build_runner build
+  build_runner: ^2.4.9
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

@@ -1,4 +1,5 @@
 import 'package:f06_carrinho_provider/data/catalogo.dart';
+import 'package:f06_carrinho_provider/model/carrinho.store.dart';
 import 'package:f06_carrinho_provider/model/carrinho_model.dart';
 import 'package:f06_carrinho_provider/model/item.dart';
 import 'package:flutter/material.dart';
@@ -88,7 +89,8 @@ class _AddButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-        final carrinho = Provider.of<CarrinhoModel>(context);
+        //final carrinho = Provider.of<CarrinhoModel>(context);
+        final carrinhoX = Provider.of<CarrinhoModelX>(context);
 
         return TextButton(
           style: ButtonStyle(
@@ -100,10 +102,10 @@ class _AddButton extends StatelessWidget {
             }),
           ),
           onPressed: () { 
-            carrinho.addProduto(item);
+            carrinhoX.add(item);
             },
             
-          child: carrinho.temProduto(item) ? const Icon(Icons.check) : const Text('ADD'), 
+          child: carrinhoX.hasItem(item) ? const Icon(Icons.check) : const Text('ADD'), 
         );
 
   }

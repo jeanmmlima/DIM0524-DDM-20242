@@ -1,5 +1,7 @@
+import 'package:f06_carrinho_provider/model/carrinho.store.dart';
 import 'package:f06_carrinho_provider/model/carrinho_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
 class CarrinhoScreen extends StatelessWidget {
@@ -36,9 +38,29 @@ class _CartList extends StatelessWidget {
   Widget build(BuildContext context) {
 
     var itemNameStyle = Theme.of(context).textTheme.headlineSmall;
+
+    final carrinhoX = Provider.of<CarrinhoModelX>(context);
+
+    return Observer(builder: (context) => ListView.builder(
+      itemCount: carrinhoX.products.length,
+          itemBuilder: (context, index) => ListTile(
+            leading: const Icon(Icons.done),
+            trailing: IconButton(
+              icon: const Icon(Icons.remove_circle_outline),
+              onPressed: () {
+                carrinhoX.remove(carrinhoX.products.elementAt(index));
+              },
+            ),
+            title: Text(
+              "${carrinhoX.products.elementAt(index).nome}",
+              style: itemNameStyle,
+            ),
+          ),
+
+    ));
     
 
-    return Consumer<CarrinhoModel>(
+    /* return Consumer<CarrinhoModel>(
       builder: (context, carrinho, child) {
         return ListView.builder(
           itemCount: carrinho.produtos.length,
@@ -57,7 +79,7 @@ class _CartList extends StatelessWidget {
           ),
       );
       },
-    );
+    ); */
   }
 }
 
@@ -67,15 +89,19 @@ class _CartTotal extends StatelessWidget {
     var hugeStyle =
         Theme.of(context).textTheme.headlineLarge!.copyWith(fontSize: 48);
 
+    final carrinhoX = Provider.of<CarrinhoModelX>(context);    
+
     return SizedBox(
       height: 200,
       child: Center(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-                    Consumer<CarrinhoModel>(builder: (context, carrinho, child) {
+                    /* Consumer<CarrinhoModel>(builder: (context, carrinho, child) {
                       return Text('\$${carrinho.total}', style: hugeStyle);
-                    }) ,
+                    })
+                     */ 
+            Observer(builder: (context) => Text('\$${carrinhoX.totalPrice}', style: hugeStyle),)        ,
             const SizedBox(width: 24),
             TextButton(
               onPressed: () {
