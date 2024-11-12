@@ -33,51 +33,35 @@ class ProductList with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> removeProduct(Product product){
-    final request = http.delete(Uri.parse('$_baseUrl/products/${product.id}.json'));
+  Future<List<Product>> fetchProducts() async {
+    List<Product> products = [];
 
-    return request.then((response) {
-      print(response.statusCode);
-      notifyListeners();
-    });
-  }
+    try {
+      final response = await http.get(Uri.parse('$_baseUrl/products.json'));
 
-  Future<List<Product>> fetchProducts(){
-    final request = http.get(Uri.parse('$_baseUrl/products.json'));
-    
+      if (response.statusCode == 200) {
+        Map<String, dynamic> _productsJson = jsonDecode(response.body);
 
-    return request.then<List<Product>>((response) {
-      
-      
-      Map<String,dynamic> items = jsonDecode(response.body);
-      
-      List<Product> products = [];
-
-      items.forEach((id, product) { 
-        products.add(Product.fromJson(id,product));
-      });
-
-      print(products.toString());
-      _items = products;
-      return products;
-    });
-
-    
-
+        _productsJson.forEach((id, product) {
+          products.add(Product.fromJson(id, product));
+        });
+        _items = products;
+        return products;
+      } else {
+        return products;
+      }
+    } catch (e) {
+      throw e;
+    }
   }
 
   Future<void> addProduct(Product product) {
-    final future = http.post(Uri.parse('$_baseUrl/products.json'),
-        body: jsonEncode({
-          "title": product.title,
-          "description": product.description,
-          "price": product.price,
-          "imageUrl": product.imageUrl,
-          "isFavorite": product.isFavorite,
-        }));
-    return future.then((response) {
+
+    final response = http.post(Uri.parse('$_baseUrl/products.json'),
+        body: jsonEncode(product.toJson()));
+    return response.then((response) {
       //print('espera a requisição acontecer');
-      print(jsonDecode(response.body)); 
+      print(jsonDecode(response.body));
       final id = jsonDecode(response.body)['name'];
       print(response.statusCode);
       _items.add(Product(
@@ -91,7 +75,18 @@ class ProductList with ChangeNotifier {
     // print('executa em sequencia');
   }
 
-  Future<void> saveProduct(Map<String, Object> data) {
+  Future<void> updateProduct(Product product) {
+
+    int index = _items.indexWhere((p) => p.id == product.id);
+
+    if (index >= 0) {
+      _items[index] = product;
+      notifyListeners();
+    }
+    return Future.value();
+  }
+
+    Future<void> saveProduct(Map<String, Object> data) {
     bool hasId = data['id'] != null;
 
     final product = Product(
@@ -103,29 +98,28 @@ class ProductList with ChangeNotifier {
     );
 
     if (hasId) {
-
       return updateProduct(product);
     } else {
       return addProduct(product);
     }
   }
 
-  Future<void> updateProduct(Product product) {
-    int index = _items.indexWhere((p) => p.id == product.id);
+  Future<void> removeProduct(Product product) {
+    final request =
+        http.delete(Uri.parse('$_baseUrl/products/${product.id}.json'));
 
-    if (index >= 0) {
-      _items[index] = product;
-      notifyListeners();
-    }
-    return Future.value();
+    return request.then((response) {
+      print(response.statusCode);
+      removeProductFromList(product);
+    });
   }
 
-  /* void removeProduct(Product product) {
+  void removeProductFromList(Product product) {
     int index = _items.indexWhere((p) => p.id == product.id);
 
     if (index >= 0) {
       _items.removeWhere((p) => p.id == product.id);
       notifyListeners();
     }
-  } */
+  }
 }

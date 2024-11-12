@@ -11,14 +11,7 @@ class ProductItem extends StatelessWidget {
 
     //PEGANDO CONTEUDO PELO PROVIDER
     //
-    final product = Provider.of<Product>(
-      context,
-      listen: false,
-    );
-
-    //final product = context.watch<Product>();
-    var isFavorite =
-        context.select<Product, bool>((produto) => produto.isFavorite);
+    final product = context.watch<Product>();
 
     return ClipRRect(
       //corta de forma arredondada o elemento de acordo com o BorderRaius

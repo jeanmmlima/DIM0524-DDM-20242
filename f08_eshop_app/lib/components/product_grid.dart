@@ -22,30 +22,54 @@ class ProductGrid extends StatelessWidget {
         future: _products,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator(); // Exibe um indicador de progresso enquanto os produtos estão sendo carregados
+            return Center(child: CircularProgressIndicator(),); // Exibe um indicador de progresso enquanto os produtos estão sendo carregados
           } else if (snapshot.hasError) {
-            return Text('Erro: ${snapshot.error}');
-          } else {
-            // Se os produtos foram carregados com sucesso, você pode acessá-los aqui
-            List<Product> products = snapshot.data!;
-            return GridView.builder(
-              padding: const EdgeInsets.all(10),
-              itemCount: products.length,
-              //# ProductItem vai receber a partir do Provider
-              itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
-                //create: (ctx) => Product(),
-                value: products[i],
-                //child: ProductItem(product: loadedProducts[i]),
-                child: ProductItem(),
-              ),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, //2 produtos por linha
-                childAspectRatio: 3 / 2, //diemnsao de cada elemento
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10,
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Vixe... algum erro aconteceu ao acessar a loja!",textAlign: TextAlign.center,style: TextStyle(fontSize: 16),),
+                ],
               ),
             );
+          } else if(snapshot.hasData) {
+            // Se os produtos foram carregados com sucesso, você pode acessá-los aqui
+            List<Product> products = snapshot.data!;
+            return ProductGridView(products: products);
+          } else {
+            return Text("Nenhum produto cadastrado na loja!",);
           }
         });
+  }
+}
+
+class ProductGridView extends StatelessWidget {
+  const ProductGridView({
+    super.key,
+    required this.products,
+  });
+
+  final List<Product> products;
+
+  @override
+  Widget build(BuildContext context) {
+    return GridView.builder(
+      padding: const EdgeInsets.all(10),
+      itemCount: products.length,
+      //# ProductItem vai receber a partir do Provider
+      itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
+        //create: (ctx) => Product(),
+        value: products[i],
+        //child: ProductItem(product: loadedProducts[i]),
+        child: ProductItem(),
+      ),
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2, //2 produtos por linha
+        childAspectRatio: 3 / 2, //diemnsao de cada elemento
+        crossAxisSpacing: 10,
+        mainAxisSpacing: 10,
+      ),
+    );
   }
 }
