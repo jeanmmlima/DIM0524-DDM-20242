@@ -1,6 +1,4 @@
 import 'package:f04_todo_list/model/Tarefa.dart';
-import 'package:f04_todo_list/routes/MyRoutes.dart';
-import 'package:f04_todo_list/screens/TaskDetail.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:go_router/go_router.dart';

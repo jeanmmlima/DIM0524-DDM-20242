@@ -1,0 +1,1 @@
+String jsonPlaceHolderUri = "https://jsonplaceholder.typicode.com/";
