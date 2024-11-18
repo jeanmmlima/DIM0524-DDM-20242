@@ -32,6 +32,7 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
 
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.pink,
         title: Text('Minha Loja'),
         actions: [
           IconButton(

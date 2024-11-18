@@ -17,6 +17,15 @@ class Product with ChangeNotifier {
     this.isFavorite = false,
   });
 
+  // Constructor that clones from an existing Product
+  Product.fromProduct(Product _product)
+      : id = _product.id,
+        title = _product.title,
+        description = _product.description,
+        price = _product.price,
+        imageUrl = _product.imageUrl,
+        isFavorite = _product.isFavorite;
+
    // Factory method to create a Product instance from a JSON map
   factory Product.fromJson(String id, Map<String, dynamic> json) {
     return Product(

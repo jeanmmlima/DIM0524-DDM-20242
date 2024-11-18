@@ -48,45 +48,37 @@ class ProductList with ChangeNotifier {
         _items = products;
         return products;
       } else {
-        return products;
+        throw Exception("Aconteceu algum erro na requisição");
       }
     } catch (e) {
       throw e;
     }
   }
 
-  Future<void> addProduct(Product product) {
+  Future<void> addProduct(Product product) async {
+    try {
+      var response = await http.post(Uri.parse('$_baseUrl/products.json'),
+          body: jsonEncode(product.toJson()));
 
-    final response = http.post(Uri.parse('$_baseUrl/products.json'),
-        body: jsonEncode(product.toJson()));
-    return response.then((response) {
-      //print('espera a requisição acontecer');
-      print(jsonDecode(response.body));
-      final id = jsonDecode(response.body)['name'];
-      print(response.statusCode);
-      _items.add(Product(
-          id: id,
-          title: product.title,
-          description: product.description,
-          price: product.price,
-          imageUrl: product.imageUrl));
-      notifyListeners();
-    });
+      if (response.statusCode == 200) {
+        final id = jsonDecode(response.body)['name'];
+        _items.add(Product(
+            id: id,
+            title: product.title,
+            description: product.description,
+            price: product.price,
+            imageUrl: product.imageUrl));
+        notifyListeners();
+      } else {
+        throw Exception("Aconteceu algum erro na requisição");
+      }
+    } catch (e) {
+      throw e;
+    }
     // print('executa em sequencia');
   }
 
-  Future<void> updateProduct(Product product) {
-
-    int index = _items.indexWhere((p) => p.id == product.id);
-
-    if (index >= 0) {
-      _items[index] = product;
-      notifyListeners();
-    }
-    return Future.value();
-  }
-
-    Future<void> saveProduct(Map<String, Object> data) {
+  Future<void> saveProduct(Map<String, Object> data) {
     bool hasId = data['id'] != null;
 
     final product = Product(
@@ -98,20 +90,26 @@ class ProductList with ChangeNotifier {
     );
 
     if (hasId) {
-      return updateProduct(product);
+      //return updateProduct(product);
+      return Future.value();
     } else {
       return addProduct(product);
     }
   }
 
-  Future<void> removeProduct(Product product) {
-    final request =
-        http.delete(Uri.parse('$_baseUrl/products/${product.id}.json'));
+  Future<void> removeProduct(Product product) async {
+    try {
+      final response =
+          await http.delete(Uri.parse('$_baseUrl/products/${product.id}.json'));
 
-    return request.then((response) {
-      print(response.statusCode);
-      removeProductFromList(product);
-    });
+      if (response.statusCode == 200) {
+        removeProductFromList(product);
+      } else {
+        throw Exception("Aconteceu algum erro durante a requisição");
+      }
+    } catch (e) {
+      throw e;
+    }
   }
 
   void removeProductFromList(Product product) {

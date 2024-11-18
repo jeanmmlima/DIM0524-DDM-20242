@@ -24,7 +24,6 @@ class MyApp extends StatelessWidget {
         title: 'Minha Loja',
         theme: ThemeData(
             fontFamily: 'Lato',
-            //primarySwatch: Colors.pink,
             colorScheme: ThemeData().copyWith().colorScheme.copyWith(
                 primary: Colors.pink, secondary: Colors.orangeAccent)),
         home: ProductsOverviewPage(),

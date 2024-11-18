@@ -27,6 +27,8 @@ class _ProductFormPageState extends State<ProductFormPage> {
     _imageUrlFocus.addListener(updateImage);
   }
 
+  //O método é chamado pela primeira vez logo após o initState. Isso ocorre porque o widget precisa verificar se possui dependências herdadas.
+  //Ele é utilizado para responder a mudanças no contexto ou dependências herdadas,
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -46,6 +48,8 @@ class _ProductFormPageState extends State<ProductFormPage> {
       }
     }
   }
+
+//A navegação para outra tela ocorre, e o widget não é mantido em memória.
 
   @override
   void dispose() {

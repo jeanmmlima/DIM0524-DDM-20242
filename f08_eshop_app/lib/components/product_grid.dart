@@ -13,9 +13,8 @@ class ProductGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     final provider = Provider.of<ProductList>(context);
 
-    /* final List<Product> loadedProducts =
-        _showOnlyFavoritos ? provider.favoriteItems : provider.items; */
-
+    
+    //tras os prdutos gravados no firebase
     late Future<List<Product>> _products = provider.fetchProducts();
 
     return FutureBuilder<List<Product>>(
@@ -58,10 +57,8 @@ class ProductGridView extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       itemCount: products.length,
       //# ProductItem vai receber a partir do Provider
-      itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
-        //create: (ctx) => Product(),
-        value: products[i],
-        //child: ProductItem(product: loadedProducts[i]),
+      itemBuilder: (ctx, i) => ChangeNotifierProvider(
+        create: (ctx) => Product.fromProduct(products[i]),
         child: ProductItem(),
       ),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
