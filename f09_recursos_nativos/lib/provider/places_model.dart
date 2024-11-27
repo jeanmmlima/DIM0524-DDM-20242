@@ -23,12 +23,12 @@ class PlacesModel with ChangeNotifier {
     return _items[index];
   }
 
-  void addPlace(String title,) {
+  void addPlace(String title, File img) {
     final newPlace = Place(
         id: Random().nextDouble().toString(),
         title: title,
         location: null,
-        image: null);
+        image: img);
 
     _items.add(newPlace);
     DbUtil.insert('places', {
@@ -46,7 +46,7 @@ class PlacesModel with ChangeNotifier {
           (item) => Place(
             id: item['id'],
             title: item['title'],
-            image: item['image'] != '' ? File(item['image']) : null,
+            image: File(item['image']),
             location: PlaceLocation(
               latitude: 0.0,
               longitude: 0.0,

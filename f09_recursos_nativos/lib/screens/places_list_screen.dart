@@ -37,6 +37,10 @@ class PlacesListScreen extends StatelessWidget {
                         : ListView.builder(
                             itemCount: places.itemsCount,
                             itemBuilder: (context, index) => ListTile(
+                              leading: CircleAvatar(
+                                backgroundImage: FileImage(
+                                    places.itemByIndex(index).image),
+                              ),
                               title: Text(places.itemByIndex(index).title),
                               onTap: () {},
                             ),

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:f09_recursos_nativos/components/image_input.dart';
 import 'package:f09_recursos_nativos/provider/places_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -15,16 +16,16 @@ class _PlaceFormScreenState extends State<PlaceFormScreen> {
 
   File? _pickedImage;
 
-  void _selectImage(File? pickedImage) {
+  void _selectImage(File pickedImage) {
     _pickedImage = pickedImage;
   }
 
   void _submitForm() {
-    if (_titleController.text.isEmpty) {
+    if (_titleController.text.isEmpty || _pickedImage == null) {
       return;
     }
     Provider.of<PlacesModel>(context, listen: false)
-        .addPlace(_titleController.text);
+        .addPlace(_titleController.text, _pickedImage!);
 
     Navigator.of(context).pop();
   }
@@ -50,6 +51,8 @@ class _PlaceFormScreenState extends State<PlaceFormScreen> {
                         labelText: 'Título',
                       ),
                     ),
+                    SizedBox(height: 10),
+                    ImageInput(this._selectImage),
                     SizedBox(height: 10),
                   ],
                 ),
