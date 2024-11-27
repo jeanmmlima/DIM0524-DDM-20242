@@ -11,13 +11,14 @@ class PlacesListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Meus Lugares'),
+        backgroundColor: Colors.indigo,
+        title: Text('Meus Lugares', style: TextStyle(color: Colors.white),),
         actions: <Widget>[
           IconButton(
             onPressed: () {
               Navigator.of(context).pushNamed(AppRoutes.PLACE_FORM);
             },
-            icon: Icon(Icons.add),
+            icon: Icon(Icons.add, color: Colors.white,),
           )
         ],
       ),

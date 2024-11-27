@@ -20,7 +20,7 @@ class _PlaceFormScreenState extends State<PlaceFormScreen> {
   }
 
   void _submitForm() {
-    if (_titleController.text.isEmpty || _pickedImage == null) {
+    if (_titleController.text.isEmpty) {
       return;
     }
     Provider.of<PlacesModel>(context, listen: false)
@@ -33,13 +33,13 @@ class _PlaceFormScreenState extends State<PlaceFormScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Novo Lugar'),
+        title: Text('Novo Lugar', style: TextStyle(color: Colors.white),),
+        backgroundColor: Colors.indigo,
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Expanded(
-            child: SingleChildScrollView(
+ SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(10),
                 child: Column(
@@ -55,16 +55,18 @@ class _PlaceFormScreenState extends State<PlaceFormScreen> {
                 ),
               ),
             ),
-          ),
-          ElevatedButton.icon(
-            icon: Icon(Icons.add),
-            label: Text('Adicionar'),
-            style: ElevatedButton.styleFrom(
-              foregroundColor: Theme.of(context).colorScheme.secondary,
-              elevation: 0,
-              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ElevatedButton.icon(
+              icon: Icon(Icons.add),
+              label: Text('Adicionar'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Theme.of(context).colorScheme.secondary,
+                elevation: 0,
+                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              ),
+              onPressed: _submitForm,
             ),
-            onPressed: _submitForm,
           ),
         ],
       ),

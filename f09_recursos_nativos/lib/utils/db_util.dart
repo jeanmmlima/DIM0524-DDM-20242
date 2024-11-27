@@ -21,10 +21,19 @@ class DbUtil {
 }
 
   static Future<void> insert(String table, Map<String, Object> data) async {
-    return Future.value();
+    //return Future.value();
+    final db = await DbUtil.openDatabaseConnection();
+    await db.insert(
+      table,
+      data,
+      conflictAlgorithm: sql
+          .ConflictAlgorithm.replace, //se inserir algo conlfitante (substitui)
+    );
   }
 
   static Future<List<Map<String, dynamic>>> getData(String table) async {
-    return Future<List<Map<String, dynamic>>>.value();
+    //return Future<List<Map<String, dynamic>>>.value();
+    final db = await DbUtil.openDatabaseConnection();
+    return db.query(table);
   }
 }
