@@ -68,7 +68,7 @@ class _ImageInputState extends State<ImageInput> {
             label: Text('Tirar foto'),
             onPressed: _takePicture,
           ),
-        ),
+        ),        
       ],
     );
   }

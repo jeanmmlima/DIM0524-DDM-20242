@@ -34,7 +34,7 @@ class PlacesModel with ChangeNotifier {
     DbUtil.insert('places', {
       'id': newPlace.id,
       'title': newPlace.title,
-      'image': '',
+      'image': newPlace.image.path,
     });
     notifyListeners();
   }
