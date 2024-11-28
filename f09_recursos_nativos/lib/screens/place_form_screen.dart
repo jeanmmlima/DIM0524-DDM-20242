@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:f09_recursos_nativos/components/image_input.dart';
+import 'package:f09_recursos_nativos/components/location_input.dart';
 import 'package:f09_recursos_nativos/provider/places_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -40,24 +41,27 @@ class _PlaceFormScreenState extends State<PlaceFormScreen> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
- SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(10),
-                child: Column(
-                  children: [
-                    TextField(
-                      controller: _titleController,
-                      decoration: InputDecoration(
-                        labelText: 'Título',
+ Expanded(
+   child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Column(
+                    children: [
+                      TextField(
+                        controller: _titleController,
+                        decoration: InputDecoration(
+                          labelText: 'Título',
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 10),
-                    ImageInput(this._selectImage),
-                    SizedBox(height: 10),
-                  ],
+                      SizedBox(height: 10),
+                      ImageInput(this._selectImage),
+                      SizedBox(height: 10),
+                      LocationInput(),
+                    ],
+                  ),
                 ),
               ),
-            ),
+ ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: ElevatedButton.icon(
