@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "918234394218",
+    "firebase_url": "https://ddm2024teste-default-rtdb.firebaseio.com",
+    "project_id": "ddm2024teste",
+    "storage_bucket": "ddm2024teste.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:918234394218:android:29532c5a539ad21a33a413",
+        "android_client_info": {
+          "package_name": "com.example.recursosnativos.dim0524"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqvcEjTpPvyqDmQsFPz-xj_nSRfBPBe_8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
