@@ -46,9 +46,8 @@ dev_dependencies:
   image_picker: ^1.1.2
   location: ^7.0.0
   google_maps_flutter: ^2.10.0
-  firebase_core: ^3.6.0
-  firebase_messaging: ^15.0.0
-  firebase_core_platform_interface: ^5.3.0
+  firebase_core: ^2.4.0
+  firebase_messaging: ^14.1.4
 
 
   # The "flutter_lints" package below contains a set of recommended lints to
