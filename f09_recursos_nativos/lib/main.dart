@@ -22,6 +22,7 @@ void main() async {
   )
   );
   await FirebaseApi().initNotificaction();
+  await FirebaseApi().setupFlutterNotifications();
   
 
   runApp(
