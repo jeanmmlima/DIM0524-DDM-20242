@@ -2,15 +2,14 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-  late AndroidNotificationChannel channel;
+late AndroidNotificationChannel channel;
 
 class FirebaseApi {
   final _firebaseMessaging = FirebaseMessaging.instance;
+
   /// Create a [AndroidNotificationChannel] for heads up notifications
 
   bool isFlutterLocalNotificationsInitialized = false;
-
-  
 
   Future<void> initNotificaction() async {
     await _firebaseMessaging.requestPermission();
@@ -19,47 +18,42 @@ class FirebaseApi {
     FirebaseMessaging.onBackgroundMessage(handlerBackgroundMessage);
     FirebaseMessaging.onMessage.listen(showFlutterNotification);
     FirebaseMessaging.onMessageOpenedApp.listen(showFlutterNotification);
-
   }
-
-
 
   Future<void> setupFlutterNotifications() async {
-  if (isFlutterLocalNotificationsInitialized) {
-    return;
+    if (isFlutterLocalNotificationsInitialized) {
+      return;
+    }
+    channel = const AndroidNotificationChannel(
+      'high_importance_channel', // id
+      'High Importance Notifications', // title
+      description:
+          'This channel is used for important notifications.', // description
+      importance: Importance.high,
+    );
+
+    /// Create an Android Notification Channel.
+    ///
+    /// We use this channel in the `AndroidManifest.xml` file to override the
+    /// default FCM channel to enable heads up notifications.
+    await flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
+        ?.createNotificationChannel(channel);
+
+    /// Update the iOS foreground notification presentation options to allow
+    /// heads up notifications.
+    await FirebaseMessaging.instance
+        .setForegroundNotificationPresentationOptions(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
+    isFlutterLocalNotificationsInitialized = true;
   }
-  channel = const AndroidNotificationChannel(
-    'high_importance_channel', // id
-    'High Importance Notifications', // title
-    description:
-        'This channel is used for important notifications.', // description
-    importance: Importance.high,
-  );
-
-  /// Create an Android Notification Channel.
-  ///
-  /// We use this channel in the `AndroidManifest.xml` file to override the
-  /// default FCM channel to enable heads up notifications.
-  await flutterLocalNotificationsPlugin
-      .resolvePlatformSpecificImplementation<
-          AndroidFlutterLocalNotificationsPlugin>()
-      ?.createNotificationChannel(channel);
-
-  /// Update the iOS foreground notification presentation options to allow
-  /// heads up notifications.
-  await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
-    alert: true,
-    badge: true,
-    sound: true,
-  );
-  isFlutterLocalNotificationsInitialized = true;
 }
 
-}
-
-
-
-void showFlutterNotification(RemoteMessage remoteMessage){
+void showFlutterNotification(RemoteMessage remoteMessage) {
   print("...onMessage...");
   print("${remoteMessage.notification?.title}");
   print("${remoteMessage.notification?.body}");
@@ -81,13 +75,10 @@ void showFlutterNotification(RemoteMessage remoteMessage){
         ),
       ),
     );
-}
+  }
 }
 
 Future<void> handlerBackgroundMessage(RemoteMessage remoteMessage) async {
-
-    print("${remoteMessage.notification?.title}");
-    print("${remoteMessage.notification?.body}");
-    showFlutterNotification(remoteMessage);
-
-  }
+  print("${remoteMessage.notification?.title}");
+  print("${remoteMessage.notification?.body}");
+}
